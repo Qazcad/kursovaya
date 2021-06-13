@@ -39,7 +39,7 @@
 ## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
 
-    (projectvenv) [vladislav@localhost project]$ pip install uwsgi flask  
+    (projectvenv) [konyk@localhost project]$ pip install uwsgi flask  
 Создадим приложение Flask:  
 
     (projectvenv) [konyk@localhost project]$ vi ~/project/app.py  
