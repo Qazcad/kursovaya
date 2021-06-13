@@ -127,14 +127,14 @@
 ## Шаг 5. Создание файла модуля systemd.  
 Создадим файл службы:  
 
-    [vladislav@localhost project]$ sudo vi /etc/systemd/system/project.service  
+    [konyk@localhost project]$ sudo vi /etc/systemd/system/project.service  
 Внутри напишем:
 
     [Unit]  
     Description=uWSGI for project  
     After=network.target  
     [Service]  
-    User=vladislav  
+    User=konyk  
     Group=nginx  
     WorkingDirectory=/home/konyk/project  
     Environment="PATH=/home/konyk/project/projectvenv/bin"  
