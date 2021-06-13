@@ -194,7 +194,7 @@
 Наконец, запустим Nginx:  
 
     [konyk@localhost project]$ sudo systemctl start nginx  
-    [vladislav@localhost project]$ sudo systemctl enable nginx  
+    [konyk@localhost project]$ sudo systemctl enable nginx  
   
 # Вывод:  
 В ходе выполнения курсовой работы было создано приложение Flask в виртуальной средe, позволяющее загружать файлы формата ".tif" и получать цветное изображение NDVI. 
