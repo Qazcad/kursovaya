@@ -54,7 +54,7 @@
 > *Running on all addresses.  
 > *Running on http://10.0.15:5000 (Press CTRL+C) to quit)  
 
-А затем обратимся к содержимому с помощью curl. Выведем первые 8 строчек html страницы: 
+Далее обратимся к содержимому с помощью curl. Выведем первые 8 строчек html страницы: 
 
     (projectenv) [konyk@localhost project]$ curl -L http://10.0.2.15:5000 | head -n 8  
     
