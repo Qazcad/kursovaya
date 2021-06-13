@@ -187,10 +187,10 @@
 Закроем и сохраним файл.  
 Добавим nginx пользователя в свою группу пользователей с помощью следующей команды:  
 
-    [konyk@localhost project]$ sudo usermod -a -G vladislav nginx  
+    [konyk@localhost project]$ sudo usermod -a -G konyk nginx  
 Предоставим группе пользователей права на выполнение в домашнем каталоге:  
 
-    [konyk@localhost project]$ chmod 710 /home/vladislav  
+    [konyk@localhost project]$ chmod 710 /home/konyk
 Запустим Nginx:  
 
     [konyk@localhost project]$ sudo systemctl start nginx  
