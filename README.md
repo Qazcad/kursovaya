@@ -1,5 +1,5 @@
 ## Курсовая работа по дисциплине информационные системы аэрокосмических комплексов.  
-### Акимов В.Н. M30-312Б-18.  
+### Конык Д.А. M3о-312б-18.  
   
 # Постановка задачи:  
 1. Скачать и установить веб-сервер.  
@@ -15,26 +15,26 @@
 ## Шаг 1. Установка необходимых компонентов.  
 Установим репозиторий EPEL, содержащий дополнительные пакеты.  
 
-    [vladislav@localhost project]$ sudo yum install epel-release
+    [konyk@localhost project]$ sudo yum install epel-release
 
 Установим pip диспетчер пакетов Python, а также файлы разработки Python, необходимые для сборки uWSGI, а также установим Nginx.  
 
-    [vladislav@localhost project]$ sudo yum install python-pip python-devel gcc nginx  
+    [konyk@localhost project]$ sudo yum install python-pip python-devel gcc nginx  
   
 ## Шаг 2. Создание виртуальной среды Python.  
 Для того чтобы изолировать приложение настроим виртуальную среду.  
 Установим пакет virtualenv:  
 
-    [vladislav@localhost project]$ sudo pip install virtualenv  
+    [konyk@localhost project]$ sudo pip install virtualenv  
 Создадим видтуальную среду:  
 
-    [vladislav@localhost project]$ virtualenv projectvenv  
+    [konyk@localhost project]$ virtualenv projectvenv  
 Активируем её:  
 
-    [vladislav@localhost project]$ source projectvenv/bin/activate  
+    [konyk@localhost project]$ source projectvenv/bin/activate  
 Убедимся что мы начали работу в виртуальной среде. Ввод терминала выглядит следующим образом:  
 
-    (projectvenv) [vladislav@localhost project]$  
+    (projectvenv) [konyk@localhost project]$  
   
 ## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
@@ -42,12 +42,12 @@
     (projectvenv) [vladislav@localhost project]$ pip install uwsgi flask  
 Создадим приложение Flask:  
 
-    (projectvenv) [vladislav@localhost project]$ vi ~/project/app.py  
+    (projectvenv) [konyk@localhost project]$ vi ~/project/app.py  
 (Исходный код приложения продемонмтрирован в данном репозитории)  
 Сохраним и закроем файл нажав ESC, а затем нажав Ctrl+Z,Z.  
 Протестируем созданное приложение. Для этого запустим его в фоновом режиме:  
 
-    (projectvenv) [vladislav@localhost project]$ python ~/project/app.py &  
+    (projectvenv) [konyk@localhost project]$ python ~/project/app.py &  
 > *Serving Flask app 'app' (lazy loading)  
 > *Environment: prodction  
 > *Debug mode: on  
@@ -56,7 +56,7 @@
 
 А затем обратимся к содержимому с помощью curl. Выведем первые 8 строчек html страницы: 
 
-    (projectenv) [vladislav@localhost project]$ curl -L http://10.0.2.15:5000 | head -n 8  
+    (projectenv) [konyk@localhost project]$ curl -L http://10.0.2.15:5000 | head -n 8  
     
 > \<!DOCTYPE html>  
 >  \<html lang="ru">  
@@ -69,14 +69,14 @@
       
 После этого остановим Flask приложение с помощью fg:  
 
-    (projectvenv) [vladislav@localhost project]$ fg  
+    (projectvenv) [konyk@localhost project]$ fg  
     python app.py  
     ^C  
   
 ## Шаг 3. Создание точки входа WSGI.  
 Создадим файл wsgi.py:  
 
-    (projectvenv) [vladislav@localhost project]$ vi ~/project/wsgi.py  
+    (projectvenv) [konyk@localhost project]$ vi ~/project/wsgi.py  
 Внутри напишем:  
 
     from project import app  
@@ -86,10 +86,10 @@
 ## Шаг 4. Настройка конфигурации uWSGI.  
 Для начала протестируем что uWSGI может обслуживать наше приложение:  
 
-    (projectvenv) [vladislav@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
+    (projectvenv) [konyk@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
 Убедимся что по указанному ранее адресу, но с портом 8000 находится содержимое html страницы.  
 
-    (projectvenv) [vladislav@localhost project]$ curl -L http://10.0.15:8000 | head -n 5  
+    (projectvenv) [konyk@localhost project]$ curl -L http://10.0.15:8000 | head -n 5  
     
 > \<!DOCTYPE html>  
 > \<html lang="ru">  
@@ -99,15 +99,15 @@
 
 После этого приостановим uwsgi:  
 
-    (projectvenv) [vladislav@localhost project]$ fg  
+    (projectvenv) [konyk@localhost project]$ fg  
     uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi
     ^C  
 На этом работа с виртуальной средой окончена. Выйдем из нее командой deactivate:  
 
-    (projectvenv) [vladislav@localhost project]$ deactivate  
+    (projectvenv) [konyk@localhost project]$ deactivate  
 Создадим файл конфигурации uWSGI:  
 
-    [vladislav@localhost project]$ vi ~/project/project.ini  
+    [konyk@localhost project]$ vi ~/project/project.ini  
 Внутри напишем:  
 
     [uwsgi]  
@@ -136,9 +136,9 @@
     [Service]  
     User=vladislav  
     Group=nginx  
-    WorkingDirectory=/home/vladislav/project  
-    Environment="PATH=/home/vladislav/project/projectvenv/bin"  
-    ExecStart=/home/vladislav/project/projectvenv/bin/uwsgi --ini project.ini  
+    WorkingDirectory=/home/konyk/project  
+    Environment="PATH=/home/konyk/project/projectvenv/bin"  
+    ExecStart=/home/konyk/project/projectvenv/bin/uwsgi --ini project.ini  
     [Install]  
     WantedBy=multi-user.target  
 где "[Unit]", "[Service]", "[Install]" - заголовки разделов;  
@@ -152,14 +152,14 @@
 "WantedBy" - когда запускаться службе.  
 Запустим созданную службу:  
 
-    [vladislav@localhost project]$ sudo systemctl start project  
-    [vladislav@localhost project]$ sudo systemctl enable project  
+    [konyk@localhost project]$ sudo systemctl start project  
+    [konyk@localhost project]$ sudo systemctl enable project  
   
 ## Шаг 6. Настройка Nginx.  
 Теперь необходимо настроить Nginx для передачи веб-запросов в  сокет с использованием uWSGI протокола.  
 Откроем файл конфигурации Nginx:  
 
-    [vladislav@localhost project]$ sudo vi /etc/nginx/nginx.conf  
+    [konyk@localhost project]$ sudo vi /etc/nginx/nginx.conf  
 Найдем блок server {} в теле http: 
 
     ...  
@@ -182,18 +182,18 @@
       
       location / {
         include uwsgi_params;
-        uwsgi_pass unix:/home/vladislav/project/project.sock;
+        uwsgi_pass unix:/home/konyk/project/project.sock;
     }
 Закроем и сохраним файл.  
 Добавим nginx пользователя в свою группу пользователей с помощью следующей команды:  
 
-    [vladislav@localhost project]$ sudo usermod -a -G vladislav nginx  
+    [konyk@localhost project]$ sudo usermod -a -G vladislav nginx  
 Предоставим группе пользователей права на выполнение в домашнем каталоге:  
 
-    [vladislav@localhost project]$ chmod 710 /home/vladislav  
+    [konyk@localhost project]$ chmod 710 /home/vladislav  
 Наконец, запустим Nginx:  
 
-    [vladislav@localhost project]$ sudo systemctl start nginx  
+    [konyk@localhost project]$ sudo systemctl start nginx  
     [vladislav@localhost project]$ sudo systemctl enable nginx  
   
 # Вывод:  
